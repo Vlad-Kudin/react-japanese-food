@@ -36,6 +36,12 @@ const SubmitOrder = (props) => {
     if (!isFormValid) {
       return;
     }
+
+    props.onSubmit({
+      name: enteredName,
+      city: enteredCity,
+      address: enteredAddress,
+    })
   }
 
   const nameInputClasses = `${styles.control} ${formValidity.name ? "" : styles.invalid}`;

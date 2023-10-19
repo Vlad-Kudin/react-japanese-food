@@ -16,15 +16,25 @@ const Cart = (props) => {
 
   const removeCartItemHandler = (id) => {
     cartContext.removeItem(id);
-  }
+  };
 
   const addCartItemHandler = (item) => {
     cartContext.addItem({...item, amount: 1});
-  }
+  };
 
   const orderHandler = () => {
     setIsSubmitOrderAvailable(true);
-  }
+  };
+
+  const submitOrderHandler = (userData) => {
+    fetch("https://react-course-http-a4f50-default-rtdb.firebaseio.com/orders.json", {
+      method: "POST",
+      body: JSON.stringify({
+        user: userData,
+        orderedMeals: cartContext.items
+      })
+    });
+  };
 
   const CartItems = (
     <ul className={styles['cart-items']}>
@@ -55,7 +65,7 @@ const Cart = (props) => {
         <span>Итого</span>
         <span>{totalAmount}</span>
       </div>
-      {isSubmitOrderAvailable && <SubmitOrder onCancel={props.onHideCart} />}
+      {isSubmitOrderAvailable && <SubmitOrder onSubmit={submitOrderHandler} onCancel={props.onHideCart} />}
       {!isSubmitOrderAvailable && modalButtons}
       
     </Modal>
