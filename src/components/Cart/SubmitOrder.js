@@ -1,26 +1,37 @@
-import style from "./SubmitOrder.module.css";
+import { useRef } from "react";
+import styles from "./SubmitOrder.module.css";
 
 const SubmitOrder = (props) => {
+  const nameInputRef = useRef();
+  const cityInputRef = useRef();
+  const addressInputRef = useRef();
+
   const confirmOrderHandler = (event) => {
     event.preventDefault();
+
+    const enteredName = nameInputRef.current.value;
+    const enteredCity = cityInputRef.current.value;
+    const enteredAddress = addressInputRef.current.value;
   }
 
   return (
-    <form onSubmit={confirmOrderHandler}>
-      <div className={style.control}>
+    <form className={styles.form} onSubmit={confirmOrderHandler}>
+      <div className={styles.control}>
         <label htmlFor="name">Name</label>
-        <input type="text" id="name" />
+        <input ref={nameInputRef} type="text" id="name" />
       </div>
-      <div className={style.control}>
+      <div className={styles.control}>
         <label htmlFor="city">City</label>
-        <input type="text" id="city" />
+        <input ref={cityInputRef} type="text" id="city" />
       </div>
-      <div className={style.control}>
+      <div className={styles.control}>
         <label htmlFor="address">Address</label>
-        <input type="text" id="address" />
+        <input ref={addressInputRef} type="text" id="address" />
       </div>
-      <button>Submit</button>
-      <button type="button" onClick={props.onCancel}>Cancel</button>
+      <div className={styles.actions}>
+        <button className={styles.submit}>Submit</button>
+        <button type="button" onClick={props.onCancel}>Cancel</button>
+      </div>
     </form>
   )
 }
